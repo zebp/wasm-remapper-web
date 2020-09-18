@@ -17,5 +17,5 @@ export type EditorProps = {
 export default function Editor(props: EditorProps) {
     const { type } = props;
     const [code] = useState(`;; Drop the ${type} wasm here`);
-    return (<MonacoEditor value={code} theme="vs-dark" options={options} />);
+    return (<MonacoEditor value={code} theme="vs-dark-wat" options={options} language="wat"/>);
 }
