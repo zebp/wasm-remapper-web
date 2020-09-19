@@ -3,6 +3,7 @@ import * as monaco from "monaco-editor";
 type WatLang = {
     keywords: string[],
     typeKeywords: string[],
+    specialKeywords: string[],
 }
 
 const wat: monaco.languages.IMonarchLanguage | WatLang = {
@@ -24,13 +25,14 @@ const wat: monaco.languages.IMonarchLanguage | WatLang = {
         "mut",
         "param",
         "result"],
+    specialKeywords: ["block", "loop", "end"],
     typeKeywords: ["i32", "i64", "f32", "f64", "funcref", "call"],
     tokenizer: {
         root: [
             [/\$\w+/, "identifier"],
-            [/\d*\.\d+([eE][-+]?\d+)?/, 'number.float'],
-            [/0[xX][0-9a-fA-F]+/, 'number.hex'],
-            [/\d+/, 'number'],
+            [/\d*\.\d+([eE][-+]?\d+)?/, "number.float"],
+            [/0[xX][0-9a-fA-F]+/, "number.hex"],
+            [/\d+/, "number"],
             [/".*"/, "string"],
             [/\(;.*;\)/, "comment"],
             [/;;.*/, "comment"],
@@ -38,6 +40,7 @@ const wat: monaco.languages.IMonarchLanguage | WatLang = {
             [/[a-zA-Z_]\w*/, {
                 cases: {
                     "@typeKeywords": "type.keyword",
+                    "@specialKeywords": "control",
                     "@keywords": { token: "keyword.$0" }
                 }
             }]
@@ -48,12 +51,13 @@ const wat: monaco.languages.IMonarchLanguage | WatLang = {
 export function register() {
     monaco.languages.register({ id: "wat" });
     monaco.languages.setMonarchTokensProvider("wat", wat as unknown as monaco.languages.IMonarchLanguage);
-    monaco.editor.defineTheme('vs-dark-wat', {
-        base: 'vs-dark',
+    monaco.editor.defineTheme("vs-dark-wat", {
+        base: "vs-dark",
         inherit: true,
         colors: {},
         rules: [
-            { token: 'identifier', foreground: 'DCDCAA' },
+            { token: "control", foreground: "C586C0" },
+            { token: "identifier", foreground: "DCDCAA" },
         ]
     });
 }

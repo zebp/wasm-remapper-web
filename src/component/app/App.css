@@ -1,3 +1,7 @@
+@import url("https://dev-cats.github.io/code-snippets/JetBrainsMono.css");
+
 #app {
     height: 100vh;
+    display: flex;
+    flex-direction: row;
 }

@@ -4,6 +4,7 @@ import monaco from "monaco-editor";
 
 // Global editor options
 const options: monaco.editor.IStandaloneEditorConstructionOptions = {
+    fontFamily: "JetBrains Mono",
     readOnly: true,
     minimap: {
         renderCharacters: false

@@ -1,3 +1,7 @@
 body {
     margin: 0px;
 }
+
+.overflowingContentWidgets {
+    display: none;
+}

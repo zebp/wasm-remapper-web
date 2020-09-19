@@ -1,0 +1,13 @@
+.sidebarIcon {
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.sidebarIcon > img {
+    padding: 1rem;
+    filter: invert() brightness(60%);
+}
+
+.sidebarIcon:hover {
+    background-color: #313131;
+}
