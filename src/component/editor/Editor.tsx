@@ -13,18 +13,24 @@ const options: monaco.editor.IStandaloneEditorConstructionOptions = {
 };
 
 export type EditorProps = {
-    type: "input" | "reference"
+    type: "input" | "reference",
+    setWasm: (wasm: Uint8Array) => void,
 };
 
 export default function Editor(props: EditorProps) {
-    const { type } = props;
-    const [code, setCode] = useState(`;; Drop the ${type} wasm here`)
+    const { type, setWasm } = props;
+    const localCode = localStorage.getItem(`wat.${type}`) || `;; Drop the ${type} wasm here`;
+    const [code, setCode] = useState(localCode);
 
     const onDrop = async ([wasmBlob]: Blob[]) => {
         const { wasm2wat } = await import("wasm2wat");
         const buffer = await wasmBlob.arrayBuffer();
-        const wat = wasm2wat(new Uint8Array(buffer));
+        const wasm = new Uint8Array(buffer);
+        const wat = wasm2wat(wasm);
+        
         setCode(wat);
+        setWasm(wasm);
+        localStorage.setItem(`wat.${type}`, wat);
     };
     const { getRootProps, getInputProps } = useDropzone({ onDrop, noClick: true });
 
