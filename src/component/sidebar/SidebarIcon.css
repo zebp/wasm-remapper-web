@@ -1,13 +1,19 @@
 .sidebarIcon {
     width: 3.5rem;
     height: 3.5rem;
+    transition: 0.3s;
 }
 
-.sidebarIcon > img {
+.sidebarIcon > svg {
     padding: 1rem;
+    transition: 0.3s;
     filter: invert() brightness(60%);
 }
 
 .sidebarIcon:hover {
     background-color: #313131;
+}
+
+.sidebarIcon:hover > svg {
+    filter: invert() brightness(80%);
 }
