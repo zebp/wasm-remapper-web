@@ -8,7 +8,8 @@ export type SidebarProps = {
     wasm: {
         inputWasm?: Uint8Array,
         referenceWasm?: Uint8Array
-    }
+    },
+    openSettings: () => void,
 };
 
 export default function Sidebar(props: SidebarProps) {
@@ -36,9 +37,15 @@ export default function Sidebar(props: SidebarProps) {
         <ReactTooltip id="remap" effect="solid" place="right" backgroundColor="#313131" delayShow={400}>
             <span> Remap the input binary and download the result </span>
         </ReactTooltip>
-        <SidebarIcon src="settings-2-outline" dataFor="settings" />
+        <SidebarIcon src="settings-2-outline" dataFor="settings" onClick={props.openSettings}/>
         <ReactTooltip id="settings" effect="solid" place="right" backgroundColor="#313131" delayShow={400}>
             <span> Configure the remapper </span>
+        </ReactTooltip>
+        <SidebarIcon src="github-outline" dataFor="github" onClick={() => {
+            (window.location as any) = "https://github.com/vlakreeh/";
+        }}/>
+        <ReactTooltip id="github" effect="solid" place="right" backgroundColor="#313131" delayShow={400}>
+            <span> Visit wasm-remapper's GitHub repo </span>
         </ReactTooltip>
     </div>);
 }

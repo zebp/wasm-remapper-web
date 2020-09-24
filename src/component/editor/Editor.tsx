@@ -9,7 +9,8 @@ const options: monaco.editor.IStandaloneEditorConstructionOptions = {
     readOnly: true,
     minimap: {
         renderCharacters: false
-    }
+    },
+    automaticLayout: true
 };
 
 export type EditorProps = {

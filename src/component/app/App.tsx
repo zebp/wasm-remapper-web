@@ -13,7 +13,11 @@ function readWasmFromLocalStorage(key: string): Uint8Array | undefined {
     return undefined;
 }
 
-function App() {
+export type AppProps = {
+    openSettings: () => void,
+};
+
+function App(props: AppProps) {
     const [inputWasm, setInputWasm] = useState<Uint8Array | undefined>(readWasmFromLocalStorage("wasm.input"));
     const [referenceWasm, setReferenceWasm] = useState<Uint8Array | undefined>(readWasmFromLocalStorage("wasm.reference"));
     const createSaveHook = (setWasmFunc: (wasm: Uint8Array) => void, key: string): (arg0: Uint8Array) => void => {
@@ -25,7 +29,7 @@ function App() {
     };
 
     return (<div id="app">
-        <Sidebar wasm={{ inputWasm, referenceWasm }}/>
+        <Sidebar wasm={{ inputWasm, referenceWasm }} openSettings={props.openSettings}/>
         <Editor type="input" setWasm={createSaveHook(setInputWasm, "wasm.input")}/>
         <Editor type="reference" setWasm={createSaveHook(setReferenceWasm, "wasm.reference")}/>
     </div>);
