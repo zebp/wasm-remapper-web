@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from '@material-ui/core/Button';
 import Slider from '@material-ui/core/Slider';
 import "./Settings.css";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Typography from "@material-ui/core/Typography";
+import { AppContext } from "../app/App";
 
 export type SettingsProps = {
     opened: boolean,
@@ -12,7 +12,14 @@ export type SettingsProps = {
 };
 
 export default function Settings({ opened, closeSettings }: SettingsProps) {
+    const {
+        matchingThreshold, setMatchingThreshold,
+        ignoreDataSectionConstants, setIgnoreDataSectionConstants,
+        requireExactFunctionLocals, setRequireExactFunctionLocals
+    } = useContext(AppContext);
+
     const style = { zIndex: opened ? 1000 : -1, display: opened ? undefined : "none" };
+
     return (
         <div id="settings-container" style={style}>
             <div id="settings-panel">
@@ -20,19 +27,20 @@ export default function Settings({ opened, closeSettings }: SettingsProps) {
                 <span> Matching Threshold </span>
                 <Slider
                     id="match-percentage"
-                    defaultValue={90}
-                    valueLabelFormat={(value) => `${value}%`}
+                    value={matchingThreshold * 100}
+                    valueLabelFormat={(value) => `${Math.round(value)}%`}
                     valueLabelDisplay="auto"
                     step={1}
-                    min={1}
+                    min={0}
                     max={100}
-                    style={{width: "200px"}}
+                    onChange={(_, value: number | number[]) => setMatchingThreshold!(value as number / 100.0)}
+                    style={{ width: "200px" }}
                 />
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={true}
-                            // onChange={handleChange}
+                            checked={ignoreDataSectionConstants}
+                            onChange={() => setIgnoreDataSectionConstants!(!ignoreDataSectionConstants)}
                             name="checkedB"
                             color="primary"
                         />
@@ -42,8 +50,8 @@ export default function Settings({ opened, closeSettings }: SettingsProps) {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={true}
-                            // onChange={handleChange}
+                            checked={requireExactFunctionLocals}
+                            onChange={() => setRequireExactFunctionLocals!(!requireExactFunctionLocals)}
                             name="checkedB"
                             color="primary"
                         />

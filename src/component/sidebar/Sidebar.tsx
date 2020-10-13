@@ -1,21 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import SidebarIcon from "./SidebarIcon";
 import ReactTooltip from "react-tooltip";
 import { saveAs } from "file-saver";
 import "./Sidebar.css"
+import { AppContext } from "../app/App";
 
 export type SidebarProps = {
-    wasm: {
-        inputWasm?: Uint8Array,
-        referenceWasm?: Uint8Array
-    },
     openSettings: () => void,
 };
 
 export default function Sidebar(props: SidebarProps) {
+    const { inputWasm, referenceWasm } = useContext(AppContext);
+
     const remapClickHandler = async () => {
         const { remap } = await import("wasm-remapper");
-        const { inputWasm, referenceWasm } = props.wasm;
 
         if (!inputWasm) {
             alert("Missing input binary");
