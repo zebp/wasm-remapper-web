@@ -46,7 +46,7 @@ export default function Sidebar(props: SidebarProps) {
             <span> Configure the remapper </span>
         </ReactTooltip>
         <SidebarIcon src="github-outline" dataFor="github" onClick={() => {
-            (window.location as any) = "https://github.com/vlakreeh/";
+            (window.location as any) = "https://github.com/vlakreeh/wasm-remapper-web";
         }} />
         <ReactTooltip id="github" effect="solid" place="right" backgroundColor="#313131" delayShow={400}>
             <span> Visit wasm-remapper's GitHub repo </span>
